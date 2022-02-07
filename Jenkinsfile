@@ -1,5 +1,5 @@
 pipeline{
-  agent {label 'main'}
+  agent any
   parameters{
     string (name: 'keyname', defaultValue: 'terra', description: ' ')
     string (name: 'SecurityGroup', defaultValue: 'sg-0244e3f85210cc582', description: ' ')
@@ -9,10 +9,10 @@ pipeline{
        stage('hosting application'){
         steps{
           sh "ls"
-          sh "aws rds create-db-instance --db-instance-identifier test-mysql-instance2 --db-name cpms --db-instance-class db.t2.micro --vpc-security-group-ids "+SecurityGroup+" --engine mysql --engine-version 5.7 --db-parameter-group-name default.mysql5.7 --publicly-accessible  --master-username admin --master-user-password Nareshkumar --allocated-storage 10 --region us-east-2"
+          sh "aws rds create-db-instance --db-instance-identifier test-mysql-instance3 --db-name cpms --db-instance-class db.t2.micro --vpc-security-group-ids "+SecurityGroup+" --engine mysql --engine-version 5.7 --db-parameter-group-name default.mysql5.7 --publicly-accessible  --master-username admin --master-user-password Nareshkumar --allocated-storage 10 --region us-east-2"
           sleep(450)
           script{
-              def cmd = "aws rds describe-db-instances --db-instance-identifier test-mysql-instance2 --region us-east-2"
+              def cmd = "aws rds describe-db-instances --db-instance-identifier test-mysql-instance3 --region us-east-2"
               def output = sh(script: cmd,returnStdout: true)
               jsonitem = readJSON text: output
               println(jsonitem)
